@@ -1,0 +1,54 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <form method="POST" action="/add_user"> <!--from user to controller.py-->
+            <h4>Registration</h4>
+                <div>
+                <label>Name</label><br>
+                    <input type="text" name="txt-name" placeholder="Enter your Name" size="25">
+                </div>
+                <div>
+                <label>Email</label><br>
+                    <input type="text" name="txt-email" placeholder="Enter your Email" size="25">
+                </div>
+                <div>
+                <label>Password</label><br>
+                    <input type="password" name="txt-pword" placeholder="Enter your password" size="25">
+                </div>
+                    <input type="submit" value="register">
+        </form>
+
+
+
+
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            
+        {% for users in all_user %} <!-- this line means all the values from all_user will be transfered to users-->
+                <tr>
+                    <td>{{users.id}}</td> <!--from model.py-->
+                    <td>{{users.name}}</td>
+                    <td>{{users.email}}</td>
+                    <td>{{users.password}}</td>
+                        <td>{{users.created_at}}</td>
+                    <td>{{users.updated_at}}</td>
+                    <td><a href="/retrieve_user/{{users.id}}">Update</a> |<a href="/delete_user/{{users.id}}"> Delete</a></td>
+                </tr>
+        {% endfor %}
+            </tr>
+        </table>
+    </body>
+    </html>
