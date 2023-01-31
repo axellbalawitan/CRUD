@@ -1,5 +1,0 @@
-[Running] python -u "c:\Users\AxellB\OneDrive\Desktop\Python\CRUD\mysqlconnection.py"
-Traceback (most recent call last):
-  File "c:\Users\AxellB\OneDrive\Desktop\Python\CRUD\mysqlconnection.py", line 1, in <module>
-    import pymysql.cursors
-ModuleNotFoundError: No module named 'pymysql'

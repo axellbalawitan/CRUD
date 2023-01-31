@@ -1,5 +1,5 @@
 from flask import Flask
-from mysqlconnection1 import connectToMySQL
+from flask_app.config.mysqlconnection1 import connectToMySQL
 
 class Users:
     def __init__(self, data):
@@ -46,3 +46,9 @@ class Users:
     def update_users(cls, data):
         query = "UPDATE users SET first_name = %(first_name)s, last_name = %(last_name)s, email = %(email)s, updated_at = NOW() WHERE id = %(id)s ;"
         return connectToMySQL("add_userdb").query_db(query, data)
+
+    @classmethod
+    def show_user(cls,data):
+        query  = "SELECT * FROM users WHERE id = %(id)s"; #this query will look for the ID
+        result = connectToMySQL("add_userdb").query_db(query,data)
+        return cls(result[0])

@@ -1,7 +1,6 @@
-from flask import Flask, render_template,redirect,request, session
-from model1 import Users
-app = Flask(__name__)
-app.secret_key = "crud"
+from flask import render_template,redirect,request, session
+from flask_app.model.users import Users
+from flask_app import app
 
 
 @app.route('/users')
@@ -11,7 +10,7 @@ def users():
 
 
 @app.route('/add_user')
-def add_user():
+def add_user(): 
     return render_template("new_user.html")
 
 @app.route('/new_user', methods=['POST'])
@@ -60,5 +59,13 @@ def update_user():
     return redirect ('/users')
 
 
-if __name__ == "__main__":
-    app.run(debug=True)
+@app.route('/show_user/<user_id>') # this code shows that the ID that was called in showuser.html 
+def show_user(user_id): #user ID in showuser.html will be transferred here
+    data = {
+        "id" : user_id # and then here
+    }
+    return render_template ("showuser.html", all_users = Users.show_user(data)) 
+    # so the data here which is the id from above code it transaltes to User.show_user(id) meaning it will look for the id in Users.show_user
+   
+
+
