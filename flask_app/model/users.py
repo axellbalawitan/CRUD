@@ -1,5 +1,9 @@
 from flask import Flask
 from flask_app.config.mysqlconnection1 import connectToMySQL
+from flask import flash
+import re
+
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 class Users:
     def __init__(self, data):
@@ -9,6 +13,24 @@ class Users:
         self.email = data ['email']
         self.created_at = data ['created_at']
         self.updated_at = data ['updated_at']
+
+
+    @staticmethod #static method is independent 
+    def validate_user(user):
+        is_valid = True
+        if len(user['txt-firstname']) <=3:
+            flash("first name should be at least 4 characters long")
+            is_valid = False
+
+        if len(user['txt-email']) <=5:
+            flash("Email should be at least 8 characters long ")
+            is_valid = False
+
+        if not EMAIL_REGEX.match(user['txt-email']): 
+            flash("Invalid email address!")
+            is_valid = False
+
+        return is_valid
 
     @classmethod # relationship with attributes / method that allows you to fetch value from database table to backend and frontend
     def all_users(cls):
@@ -37,9 +59,9 @@ class Users:
     def retrieve_user(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
         return connectToMySQL("add_userdb").query_db(query, data)
-        if len(results) < 1 :
+        if len(results) < 1 : #although this line is not necessary since it's already been returned
             return  False
-        return cls(results[0])
+        return cls(results[0]) #zero here is the id
 
     
     @classmethod # We will now be retrieving data from controller.py

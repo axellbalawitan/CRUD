@@ -7,7 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    <body>
         <form method="POST" action="/new_user"> 
             <h4>Registration</h4>
                 <div>
@@ -24,6 +23,13 @@
                 </div>
                     <input type="submit" value="Add User">
         </form>
-    
+        {% with messages = get_flashed_messages() %}<!-- declare a variable called messages -->
+            {% if messages %}<!-- check if there are any messages -->
+                {% for message in messages %}<!-- loop through the messages -->
+                    <p>{{message}}</p><!-- display each message in a paragraph tag -->
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
 </body>
 </html>

@@ -3,6 +3,7 @@ from flask_app.model.users import Users
 from flask_app import app
 
 
+
 @app.route('/users')
 def users():
     user = Users.all_users()
@@ -15,12 +16,14 @@ def add_user():
 
 @app.route('/new_user', methods=['POST'])
 def new_user():
+    if not Users.validate_user(request.form):
+        return redirect ('/add_user')  #this is the validation part, if it doesn't have an error and meets the requirements in the static method, the code below will execute
 
     data = {
         "first_name" : request.form["txt-firstname"],  
         "last_name" : request.form["txt-lastname"],
         "email" : request.form["txt-email"]
-    }
+        }
     Users.add_users(data)
     return redirect ('/users')
 
@@ -36,7 +39,7 @@ def delete_user(user_id):
 
 
 
-@app.route('/edit_user/<user_id>')
+@app.route('/edit_user/<user_id>') #this route retrieves data from users.py
 def retrieve_user(user_id):
     data = {
         "id" : user_id
